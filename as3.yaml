@@ -1,0 +1,26 @@
+---
+- name: DEPLOY AS3 DEC
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+
+  vars:
+
+  vars_files:
+    - ../creds/F5_pass.yaml
+
+  tasks: 
+  - name: Create AS App
+    uri:
+      url: https://35.179.86.82/mgmt/shared/appsvcs/declare/
+      method: POST
+      user: "{{ bigip_user }}"
+      password: "{{ bigip_pass }}"
+      body: "{{ lookup('file','as3.json') }}"
+      force_basic_auth: yes
+      status_code: 200
+      body_format: json
+      validate_certs: no
+
+...
